@@ -1,3 +1,4 @@
+
 import { QRContent } from "@/components/qr-content";
 import { QRDownload } from "@/components/qr-download";
 import { QRCodeGenerator } from "@/components/qr-code-generator";
@@ -80,7 +81,7 @@ const Index = () => {
       
       <footer className="border-t py-6">
         <div className="container text-center text-sm text-muted-foreground">
-          <p>Qrafty QR Code Generator © {new Date().getFullYear()}</p>
+          <p>Qrafty QR Code Generator © {new Date().getFullYear()} | Created by <a href="https://vineetcodes.vercel.app" target="_blank" rel="noopener noreferrer" className="text-qr-purple hover:underline">Vineet</a></p>
         </div>
       </footer>
     </div>

@@ -42,44 +42,45 @@ END:VCARD`;
     }
   };
 
-  // Calculate dot/corner styles based on the module shape
+  // Calculate dot style based on the module shape
   const getDotStyle = () => {
     switch (style.moduleShape) {
       case "rounded":
-        return { 
-          width: 0.9, 
-          height: 0.9, 
+        return {
+          width: 0.9,
+          height: 0.9,
           rx: 5
         };
       case "dots":
-        return { 
-          width: 0.7, 
-          height: 0.7, 
-          style: "circle"
+        return {
+          width: 0.7,
+          height: 0.7,
+          style: "dot"
         };
       default:
         return undefined;
     }
   };
 
-  // Calculate corner styles
+  // Calculate corner square style
   const getCornerSquareStyle = () => {
     switch (style.cornerSquareType) {
       case "rounded":
-        return { type: "extra-rounded" as const };
+        return { type: "rounded" };
       case "dots":
-        return { type: "dot" as const };
+        return { type: "dot" };
       default:
         return undefined;
     }
   };
 
+  // Calculate corner dot style
   const getCornerDotStyle = () => {
     switch (style.cornerDotType) {
       case "rounded":
-        return { type: "rounded" as const };
+        return { type: "rounded" };
       case "dots":
-        return { type: "dot" as const };
+        return { type: "dot" };
       default:
         return undefined;
     }
@@ -96,11 +97,10 @@ END:VCARD`;
           level={style.errorCorrectionLevel}
           includeMargin={true}
           imageSettings={undefined}
-          // @ts-expect-error QRCodeCanvas has additional props from qrcode.react
-          // that are not typed in the package
-          dotStyle={getDotStyle()}
-          cornerSquareStyle={getCornerSquareStyle()}
-          cornerDotStyle={getCornerDotStyle()}
+          // @ts-ignore - The QRCode.react library has additional props for styling that aren't in the types
+          dotsOptions={getDotStyle()}
+          cornersSquareOptions={getCornerSquareStyle()}
+          cornersDotOptions={getCornerDotStyle()}
         />
       </div>
     </Card>
