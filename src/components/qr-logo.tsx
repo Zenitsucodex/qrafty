@@ -28,10 +28,6 @@ export function QRLogo() {
     updateQRStyle({ logo: { ...logo!, size: values[0] } });
   };
 
-  const handleOpacityChange = (values: number[]) => {
-    updateQRStyle({ logo: { ...logo!, opacity: values[0] } });
-  };
-
   const handleMarginChange = (values: number[]) => {
     updateQRStyle({ logo: { ...logo!, margin: values[0] } });
   };
@@ -65,25 +61,8 @@ export function QRLogo() {
               value={[logo!.size]}
               onValueChange={handleSizeChange}
               min={0.05}
-              max={0.4}
+              max={0.5}
               step={0.01}
-              className="w-full"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <Label>Opacity</Label>
-              <span className="text-sm text-muted-foreground">
-                {Math.round(logo!.opacity * 100)}%
-              </span>
-            </div>
-            <Slider
-              value={[logo!.opacity]}
-              onValueChange={handleOpacityChange}
-              min={0.1}
-              max={1}
-              step={0.1}
               className="w-full"
             />
           </div>
