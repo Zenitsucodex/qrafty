@@ -1,13 +1,13 @@
-
 import { useQRCode } from "@/context/qr-code-context";
-import { QRCodeCanvas } from "qrcode.react";
+import QRCodeStyling from "qr-code-styling";
+import { useEffect, useRef } from "react";
 import { Card } from "./ui/card";
-import { useRef } from "react";
 
 export function QRCodeGenerator() {
   const { qrConfig } = useQRCode();
   const { data, style } = qrConfig;
   const qrRef = useRef<HTMLDivElement>(null);
+  const qrCode = useRef<QRCodeStyling>();
 
   // Logic to generate QR code based on content type
   const getQRValue = () => {
@@ -42,67 +42,46 @@ END:VCARD`;
     }
   };
 
-  // Calculate dot style based on the module shape
-  const getDotStyle = () => {
-    switch (style.moduleShape) {
-      case "rounded":
-        return {
-          width: 0.9,
-          height: 0.9,
-          rx: 5
-        };
-      case "dots":
-        return {
-          width: 0.7,
-          height: 0.7,
-          style: "dot"
-        };
-      default:
-        return undefined;
-    }
-  };
+  useEffect(() => {
+    if (!qrRef.current) return;
 
-  // Calculate corner square style
-  const getCornerSquareStyle = () => {
-    switch (style.cornerSquareType) {
-      case "rounded":
-        return { type: "rounded" };
-      case "dots":
-        return { type: "dot" };
-      default:
-        return undefined;
-    }
-  };
+    qrCode.current = new QRCodeStyling({
+      width: style.size,
+      height: style.size,
+      data: getQRValue(),
+      dotsOptions: {
+        color: style.foregroundColor,
+        type: style.moduleShape === "dots" ? "dots" : 
+              style.moduleShape === "rounded" ? "rounded" : "square"
+      },
+      backgroundOptions: {
+        color: style.backgroundColor,
+      },
+      cornersSquareOptions: {
+        color: style.foregroundColor,
+        type: style.cornerSquareType === "dots" ? "dot" : 
+              style.cornerSquareType === "rounded" ? "rounded" : "square"
+      },
+      cornersDotOptions: {
+        color: style.foregroundColor,
+        type: style.cornerDotType === "dots" ? "dot" : 
+              style.cornerDotType === "rounded" ? "rounded" : "square"
+      },
+      qrOptions: {
+        errorCorrectionLevel: style.errorCorrectionLevel
+      }
+    });
 
-  // Calculate corner dot style
-  const getCornerDotStyle = () => {
-    switch (style.cornerDotType) {
-      case "rounded":
-        return { type: "rounded" };
-      case "dots":
-        return { type: "dot" };
-      default:
-        return undefined;
+    // Clear previous content and append new QR code
+    if (qrRef.current) {
+      qrRef.current.innerHTML = '';
+      qrCode.current.append(qrRef.current);
     }
-  };
+  }, [data, style]);
 
   return (
     <Card className="flex justify-center items-center p-8 overflow-hidden bg-white dark:bg-card rounded-lg shadow-md">
-      <div ref={qrRef} className="qr-code-container">
-        <QRCodeCanvas
-          value={getQRValue()}
-          size={style.size}
-          bgColor={style.backgroundColor}
-          fgColor={style.foregroundColor}
-          level={style.errorCorrectionLevel}
-          includeMargin={true}
-          imageSettings={undefined}
-          // @ts-ignore - The QRCode.react library has additional props for styling that aren't in the types
-          dotsOptions={getDotStyle()}
-          cornersSquareOptions={getCornerSquareStyle()}
-          cornersDotOptions={getCornerDotStyle()}
-        />
-      </div>
+      <div ref={qrRef} className="qr-code-container"></div>
     </Card>
   );
 }
