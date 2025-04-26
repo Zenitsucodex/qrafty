@@ -84,7 +84,6 @@ END:VCARD`;
         imageSize: style.logo.size,
         margin: style.logo.margin,
         crossOrigin: "anonymous",
-        imageOpacity: style.logo.opacity,
       };
     }
 
