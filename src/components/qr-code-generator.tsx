@@ -9,7 +9,6 @@ export function QRCodeGenerator() {
   const qrRef = useRef<HTMLDivElement>(null);
   const qrCode = useRef<QRCodeStyling>();
 
-  // Logic to generate QR code based on content type
   const getQRValue = () => {
     switch (data.type) {
       case "url":
@@ -49,30 +48,27 @@ END:VCARD`;
       width: style.size,
       height: style.size,
       data: getQRValue(),
+      margin: style.padding,
       dotsOptions: {
         color: style.foregroundColor,
-        type: style.moduleShape === "dots" ? "dots" : 
-              style.moduleShape === "rounded" ? "rounded" : "square"
+        type: style.moduleShape
       },
       backgroundOptions: {
         color: style.backgroundColor,
       },
       cornersSquareOptions: {
         color: style.foregroundColor,
-        type: style.cornerSquareType === "dots" ? "dot" : 
-              style.cornerSquareType === "rounded" ? "rounded" : "square"
+        type: style.cornerSquareType
       },
       cornersDotOptions: {
         color: style.foregroundColor,
-        type: style.cornerDotType === "dots" ? "dot" : 
-              style.cornerDotType === "rounded" ? "rounded" : "square"
+        type: style.cornerDotType
       },
       qrOptions: {
         errorCorrectionLevel: style.errorCorrectionLevel
       }
     });
 
-    // Clear previous content and append new QR code
     if (qrRef.current) {
       qrRef.current.innerHTML = '';
       qrCode.current.append(qrRef.current);
@@ -80,7 +76,7 @@ END:VCARD`;
   }, [data, style]);
 
   return (
-    <Card className="flex justify-center items-center p-8 overflow-hidden bg-white dark:bg-card rounded-lg shadow-md">
+    <Card className="flex justify-center items-center p-4 sm:p-8 overflow-hidden bg-white dark:bg-card rounded-lg shadow-md">
       <div ref={qrRef} className="qr-code-container"></div>
     </Card>
   );

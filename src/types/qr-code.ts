@@ -1,4 +1,3 @@
-
 export type QRCodeType = 'text' | 'url' | 'email' | 'phone' | 'sms' | 'wifi' | 'vcard';
 
 export type QRCodeData = {
@@ -23,11 +22,12 @@ export type QRCodeData = {
 export type QRCodeStyle = {
   foregroundColor: string;
   backgroundColor: string;
-  moduleShape: 'square' | 'rounded' | 'dots';
-  cornerSquareType: 'square' | 'rounded' | 'dots';
+  moduleShape: 'square' | 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'sharp';
+  cornerSquareType: 'square' | 'rounded' | 'dots' | 'extra-rounded';
   cornerDotType: 'square' | 'rounded' | 'dots';
   errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
   size: number;
+  padding: number;
 };
 
 export type QRCodeConfig = {

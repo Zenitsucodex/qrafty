@@ -6,13 +6,25 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useQRCode } from "@/context/qr-code-context";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function QRStyle() {
   const { qrConfig, updateQRStyle } = useQRCode();
   const { style } = qrConfig;
+  const isMobile = useIsMobile();
 
   const moduleShapes = [
     { value: "square", label: "Square" },
+    { value: "rounded", label: "Rounded" },
+    { value: "dots", label: "Dots" },
+    { value: "classy", label: "Classy" },
+    { value: "classy-rounded", label: "Classy Rounded" },
+    { value: "sharp", label: "Sharp" },
+  ];
+
+  const cornerShapes = [
+    { value: "square", label: "Square" },
+    { value: "extra-rounded", label: "Extra Rounded" },
     { value: "rounded", label: "Rounded" },
     { value: "dots", label: "Dots" },
   ];
@@ -25,13 +37,13 @@ export function QRStyle() {
   ];
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="w-full">
+      <CardHeader className={isMobile ? "p-4" : "p-6"}>
         <CardTitle>QR Style</CardTitle>
         <CardDescription>Customize the appearance of your QR code</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
+      <CardContent className={`space-y-6 ${isMobile ? "p-4" : "p-6"} pt-0`}>
+        <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="foregroundColor">Foreground Color</Label>
             <div className="flex items-center space-x-2">
@@ -98,7 +110,7 @@ export function QRStyle() {
               <SelectValue placeholder="Select corner square style" />
             </SelectTrigger>
             <SelectContent>
-              {moduleShapes.map((shape) => (
+              {cornerShapes.map((shape) => (
                 <SelectItem key={shape.value} value={shape.value}>
                   {shape.label}
                 </SelectItem>
@@ -117,7 +129,7 @@ export function QRStyle() {
               <SelectValue placeholder="Select corner dot style" />
             </SelectTrigger>
             <SelectContent>
-              {moduleShapes.map((shape) => (
+              {moduleShapes.slice(0, 3).map((shape) => (
                 <SelectItem key={shape.value} value={shape.value}>
                   {shape.label}
                 </SelectItem>
@@ -156,6 +168,21 @@ export function QRStyle() {
             step={8}
             value={[style.size]}
             onValueChange={(val) => updateQRStyle({ size: val[0] })}
+            className="w-full"
+          />
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <Label htmlFor="padding">Padding: {style.padding}px</Label>
+          </div>
+          <Slider
+            id="padding"
+            min={0}
+            max={50}
+            step={2}
+            value={[style.padding || 0]}
+            onValueChange={(val) => updateQRStyle({ padding: val[0] })}
             className="w-full"
           />
         </div>

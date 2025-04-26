@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState } from "react";
 import { QRCodeConfig, QRCodeData, QRCodeStyle } from "@/types/qr-code";
 import { toast } from "sonner";
@@ -23,6 +22,7 @@ const defaultQRStyle: QRCodeStyle = {
   cornerDotType: 'square',
   errorCorrectionLevel: 'M',
   size: 256,
+  padding: 0,
 };
 
 const defaultQRConfig: QRCodeConfig = {
