@@ -1,3 +1,4 @@
+
 export type QRCodeType = 'text' | 'url' | 'email' | 'phone' | 'sms' | 'wifi' | 'vcard';
 
 export type QRCodeData = {
@@ -19,6 +20,7 @@ export type QRCodeData = {
   note?: string;
 };
 
+// Align with qr-code-styling library's supported types
 export type QRCodeStyle = {
   foregroundColor: string;
   backgroundColor: string;

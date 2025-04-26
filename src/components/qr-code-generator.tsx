@@ -1,3 +1,4 @@
+
 import { useQRCode } from "@/context/qr-code-context";
 import QRCodeStyling from "qr-code-styling";
 import { useEffect, useRef } from "react";
@@ -44,6 +45,12 @@ END:VCARD`;
   useEffect(() => {
     if (!qrRef.current) return;
 
+    // Ensure module shape is compatible with the qr-code-styling library's DotType
+    // For 'sharp' and other non-standard shapes, fall back to 'square'
+    const moduleShape = ['square', 'rounded', 'dots'].includes(style.moduleShape) 
+      ? style.moduleShape 
+      : 'square';
+
     qrCode.current = new QRCodeStyling({
       width: style.size,
       height: style.size,
@@ -51,7 +58,7 @@ END:VCARD`;
       margin: style.padding,
       dotsOptions: {
         color: style.foregroundColor,
-        type: style.moduleShape
+        type: moduleShape
       },
       backgroundOptions: {
         color: style.backgroundColor,

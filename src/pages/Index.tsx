@@ -7,6 +7,7 @@ import { Header } from "@/components/header";
 import { useState } from "react";
 import { ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [zoomLevel, setZoomLevel] = useState(1);
