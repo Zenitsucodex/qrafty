@@ -1,4 +1,3 @@
-
 export type QRCodeType = 'text' | 'url' | 'email' | 'phone' | 'sms' | 'wifi' | 'vcard';
 
 export type QRCodeData = {
@@ -26,15 +25,24 @@ export type ModuleShape = DotType | 'classy' | 'classy-rounded' | 'sharp';
 export type CornerSquareType = 'square' | 'rounded' | 'dots' | 'extra-rounded';
 export type CornerDotType = 'square' | 'rounded' | 'dots';
 
+export type LogoOptions = {
+  src: string;
+  size: number;
+  opacity: number;
+  margin: number;
+  removeStroke: boolean;
+};
+
 export type QRCodeStyle = {
   foregroundColor: string;
   backgroundColor: string;
-  moduleShape: ModuleShape;  // We support more shapes in our UI
+  moduleShape: ModuleShape;
   cornerSquareType: CornerSquareType;
   cornerDotType: CornerDotType;
   errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
   size: number;
   padding: number;
+  logo?: LogoOptions;
 };
 
 export type QRCodeConfig = {

@@ -23,6 +23,13 @@ const defaultQRStyle: QRCodeStyle = {
   errorCorrectionLevel: 'M',
   size: 256,
   padding: 0,
+  logo: {
+    src: '',
+    size: 0.2,
+    opacity: 1,
+    margin: 5,
+    removeStroke: true
+  }
 };
 
 const defaultQRConfig: QRCodeConfig = {

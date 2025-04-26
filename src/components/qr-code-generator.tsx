@@ -47,12 +47,11 @@ END:VCARD`;
     if (!qrRef.current) return;
 
     // Ensure module shape is compatible with the qr-code-styling library's DotType
-    // For custom shapes like 'classy', 'classy-rounded', and 'sharp', fall back to 'square'
     const moduleShape: DotType = (['square', 'rounded', 'dots'] as DotType[]).includes(style.moduleShape as DotType) 
       ? style.moduleShape as DotType
       : 'square';
 
-    qrCode.current = new QRCodeStyling({
+    const config: any = {
       width: style.size,
       height: style.size,
       data: getQRValue(),
@@ -75,7 +74,21 @@ END:VCARD`;
       qrOptions: {
         errorCorrectionLevel: style.errorCorrectionLevel
       }
-    });
+    };
+
+    // Add logo configuration if a logo source is provided
+    if (style.logo?.src) {
+      config.image = style.logo.src;
+      config.imageOptions = {
+        hideBackgroundDots: style.logo.removeStroke,
+        imageSize: style.logo.size,
+        margin: style.logo.margin,
+        crossOrigin: "anonymous",
+        imageOpacity: style.logo.opacity,
+      };
+    }
+
+    qrCode.current = new QRCodeStyling(config);
 
     if (qrRef.current) {
       qrRef.current.innerHTML = '';

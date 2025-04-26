@@ -3,6 +3,7 @@ import { QRContent } from "@/components/qr-content";
 import { QRDownload } from "@/components/qr-download";
 import { QRCodeGenerator } from "@/components/qr-code-generator";
 import { QRStyle } from "@/components/qr-style";
+import { QRLogo } from "@/components/qr-logo";
 import { Header } from "@/components/header";
 import { useState } from "react";
 import { ZoomIn, ZoomOut } from "lucide-react";
@@ -37,6 +38,7 @@ const Index = () => {
           {/* Left sidebar with settings */}
           <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
             <QRContent />
+            <QRLogo />
             <QRStyle />
             <QRDownload />
           </div>
