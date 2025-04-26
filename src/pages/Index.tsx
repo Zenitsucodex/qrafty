@@ -1,7 +1,6 @@
-
 import { QRContent } from "@/components/qr-content";
 import { QRDownload } from "@/components/qr-download";
-import { QRGenerator } from "@/components/qr-code-generator";
+import { QRCodeGenerator } from "@/components/qr-code-generator";
 import { QRStyle } from "@/components/qr-style";
 import { Header } from "@/components/header";
 import { useState } from "react";
@@ -67,7 +66,7 @@ const Index = () => {
               
               <div className="flex items-center justify-center p-4 min-h-[400px] bg-secondary/50 rounded-md overflow-auto">
                 <div style={{ transform: `scale(${zoomLevel})`, transition: "transform 0.2s" }}>
-                  <QRGenerator />
+                  <QRCodeGenerator />
                 </div>
               </div>
               
