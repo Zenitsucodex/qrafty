@@ -20,13 +20,18 @@ export type QRCodeData = {
   note?: string;
 };
 
-// Align with qr-code-styling library's supported types
+// Define valid types for QR code styling based on qr-code-styling library's supported types
+export type DotType = 'square' | 'rounded' | 'dots';
+export type ModuleShape = DotType | 'classy' | 'classy-rounded' | 'sharp';
+export type CornerSquareType = 'square' | 'rounded' | 'dots' | 'extra-rounded';
+export type CornerDotType = 'square' | 'rounded' | 'dots';
+
 export type QRCodeStyle = {
   foregroundColor: string;
   backgroundColor: string;
-  moduleShape: 'square' | 'rounded' | 'dots' | 'classy' | 'classy-rounded' | 'sharp';
-  cornerSquareType: 'square' | 'rounded' | 'dots' | 'extra-rounded';
-  cornerDotType: 'square' | 'rounded' | 'dots';
+  moduleShape: ModuleShape;  // We support more shapes in our UI
+  cornerSquareType: CornerSquareType;
+  cornerDotType: CornerDotType;
   errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
   size: number;
   padding: number;

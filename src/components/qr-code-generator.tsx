@@ -3,6 +3,7 @@ import { useQRCode } from "@/context/qr-code-context";
 import QRCodeStyling from "qr-code-styling";
 import { useEffect, useRef } from "react";
 import { Card } from "./ui/card";
+import { DotType } from "@/types/qr-code";
 
 export function QRCodeGenerator() {
   const { qrConfig } = useQRCode();
@@ -46,9 +47,9 @@ END:VCARD`;
     if (!qrRef.current) return;
 
     // Ensure module shape is compatible with the qr-code-styling library's DotType
-    // For 'sharp' and other non-standard shapes, fall back to 'square'
-    const moduleShape = ['square', 'rounded', 'dots'].includes(style.moduleShape) 
-      ? style.moduleShape 
+    // For custom shapes like 'classy', 'classy-rounded', and 'sharp', fall back to 'square'
+    const moduleShape: DotType = (['square', 'rounded', 'dots'] as DotType[]).includes(style.moduleShape as DotType) 
+      ? style.moduleShape as DotType
       : 'square';
 
     qrCode.current = new QRCodeStyling({
