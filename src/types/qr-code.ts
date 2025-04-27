@@ -1,3 +1,4 @@
+
 export type QRCodeType = 'text' | 'url' | 'email' | 'phone' | 'sms' | 'wifi' | 'vcard';
 
 export type QRCodeData = {
@@ -34,7 +35,6 @@ export type GradientOptions = {
 export type LogoOptions = {
   src: string;
   size: number;
-  opacity: number;
   margin: number;
   removeStroke: boolean;
 };
