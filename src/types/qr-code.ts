@@ -25,6 +25,12 @@ export type ModuleShape = DotType | 'classy' | 'classy-rounded' | 'sharp';
 export type CornerSquareType = 'square' | 'rounded' | 'dots' | 'extra-rounded';
 export type CornerDotType = 'square' | 'rounded' | 'dots';
 
+export type GradientOptions = {
+  type: 'linear';
+  rotation: number;
+  colorStops: [string, string];
+};
+
 export type LogoOptions = {
   src: string;
   size: number;
@@ -43,6 +49,7 @@ export type QRCodeStyle = {
   size: number;
   padding: number;
   logo?: LogoOptions;
+  gradient?: GradientOptions;
 };
 
 export type QRCodeConfig = {

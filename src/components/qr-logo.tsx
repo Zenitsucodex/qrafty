@@ -6,6 +6,8 @@ import { Slider } from "./ui/slider";
 import { useQRCode } from "@/context/qr-code-context";
 import { Switch } from "./ui/switch";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "./ui/button";
+import { X } from "lucide-react";
 
 export function QRLogo() {
   const { qrConfig, updateQRStyle } = useQRCode();
@@ -32,14 +34,52 @@ export function QRLogo() {
     updateQRStyle({ logo: { ...logo!, margin: values[0] } });
   };
 
+  const handleOpacityChange = (values: number[]) => {
+    updateQRStyle({ logo: { ...logo!, opacity: values[0] } });
+  };
+
+  const handleRemoveLogo = () => {
+    updateQRStyle({ logo: undefined });
+  };
+
+  if (!logo) {
+    return (
+      <Card className="w-full">
+        <CardHeader className={isMobile ? "p-4" : "p-6"}>
+          <CardTitle>Logo Customization</CardTitle>
+        </CardHeader>
+        <CardContent className={`space-y-6 ${isMobile ? "p-4" : "p-6"} pt-0`}>
+          <div className="space-y-2">
+            <Label htmlFor="logo">Upload Logo</Label>
+            <Input
+              id="logo"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="cursor-pointer"
+            />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="w-full">
-      <CardHeader className={isMobile ? "p-4" : "p-6"}>
+      <CardHeader className={`${isMobile ? "p-4" : "p-6"} flex flex-row items-center justify-between`}>
         <CardTitle>Logo Customization</CardTitle>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleRemoveLogo}
+          className="h-8 w-8"
+        >
+          <X className="h-4 w-4" />
+        </Button>
       </CardHeader>
       <CardContent className={`space-y-6 ${isMobile ? "p-4" : "p-6"} pt-0`}>
         <div className="space-y-2">
-          <Label htmlFor="logo">Upload Logo</Label>
+          <Label htmlFor="logo">Change Logo</Label>
           <Input
             id="logo"
             type="file"
@@ -54,14 +94,14 @@ export function QRLogo() {
             <div className="flex justify-between">
               <Label>Logo Size</Label>
               <span className="text-sm text-muted-foreground">
-                {Math.round(logo!.size * 100)}%
+                {Math.round(logo.size * 100)}%
               </span>
             </div>
             <Slider
-              value={[logo!.size]}
+              value={[logo.size]}
               onValueChange={handleSizeChange}
               min={0.05}
-              max={0.5}
+              max={0.4}
               step={0.01}
               className="w-full"
             />
@@ -69,11 +109,28 @@ export function QRLogo() {
 
           <div className="space-y-2">
             <div className="flex justify-between">
-              <Label>Margin</Label>
-              <span className="text-sm text-muted-foreground">{logo!.margin}px</span>
+              <Label>Opacity</Label>
+              <span className="text-sm text-muted-foreground">
+                {Math.round(logo.opacity * 100)}%
+              </span>
             </div>
             <Slider
-              value={[logo!.margin]}
+              value={[logo.opacity]}
+              onValueChange={handleOpacityChange}
+              min={0.1}
+              max={1}
+              step={0.1}
+              className="w-full"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <Label>Margin</Label>
+              <span className="text-sm text-muted-foreground">{logo.margin}px</span>
+            </div>
+            <Slider
+              value={[logo.margin]}
               onValueChange={handleMarginChange}
               min={0}
               max={20}
@@ -85,9 +142,9 @@ export function QRLogo() {
           <div className="flex items-center justify-between space-x-2">
             <Label>Remove Background</Label>
             <Switch
-              checked={logo!.removeStroke}
+              checked={logo.removeStroke}
               onCheckedChange={(checked) =>
-                updateQRStyle({ logo: { ...logo!, removeStroke: checked } })
+                updateQRStyle({ logo: { ...logo, removeStroke: checked } })
               }
             />
           </div>

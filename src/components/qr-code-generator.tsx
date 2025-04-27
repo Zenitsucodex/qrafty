@@ -46,7 +46,6 @@ END:VCARD`;
   useEffect(() => {
     if (!qrRef.current) return;
 
-    // Ensure module shape is compatible with the qr-code-styling library's DotType
     const moduleShape: DotType = (['square', 'rounded', 'dots'] as DotType[]).includes(style.moduleShape as DotType) 
       ? style.moduleShape as DotType
       : 'square';
@@ -57,18 +56,23 @@ END:VCARD`;
       data: getQRValue(),
       margin: style.padding,
       dotsOptions: {
-        color: style.foregroundColor,
+        color: style.gradient ? undefined : style.foregroundColor,
+        gradient: style.gradient ? {
+          type: style.gradient.type,
+          rotation: style.gradient.rotation,
+          colorStops: style.gradient.colorStops,
+        } : undefined,
         type: moduleShape
       },
       backgroundOptions: {
         color: style.backgroundColor,
       },
       cornersSquareOptions: {
-        color: style.foregroundColor,
+        color: style.gradient ? style.gradient.colorStops[0] : style.foregroundColor,
         type: style.cornerSquareType
       },
       cornersDotOptions: {
-        color: style.foregroundColor,
+        color: style.gradient ? style.gradient.colorStops[0] : style.foregroundColor,
         type: style.cornerDotType
       },
       qrOptions: {
