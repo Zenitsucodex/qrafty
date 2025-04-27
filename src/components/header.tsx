@@ -9,7 +9,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <QrCode className="h-6 w-6 text-qr-purple" />
-          <span className="font-bold text-xl">Qrafty</span>
+          <span className="font-bold text-xl">QRafty</span>
         </div>
         
         <div className="flex items-center gap-2">
