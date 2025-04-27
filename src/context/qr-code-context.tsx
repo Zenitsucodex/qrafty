@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState } from "react";
 import { QRCodeConfig, QRCodeData, QRCodeStyle } from "@/types/qr-code";
 import { toast } from "sonner";
@@ -54,10 +55,28 @@ export function QRCodeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQRStyle = (style: Partial<QRCodeStyle>) => {
-    setQRConfig((prev) => ({
-      ...prev,
-      style: { ...prev.style, ...style },
-    }));
+    setQRConfig((prev) => {
+      // Create a new style object with the updates
+      const newStyle = { ...prev.style, ...style };
+      
+      // If foreground color is changing, also update gradient color stops if they match the old foreground color
+      if (style.foregroundColor && prev.style.gradient) {
+        // Check if both gradient stops are the same as the old foreground color
+        if (prev.style.gradient.colorStops[0] === prev.style.foregroundColor && 
+            prev.style.gradient.colorStops[1] === prev.style.foregroundColor) {
+          // Update both gradient stops to the new foreground color
+          newStyle.gradient = {
+            ...prev.style.gradient,
+            colorStops: [style.foregroundColor, style.foregroundColor]
+          };
+        }
+      }
+      
+      return {
+        ...prev,
+        style: newStyle,
+      };
+    });
   };
 
   const resetQRCode = () => {

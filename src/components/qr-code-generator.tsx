@@ -50,35 +50,43 @@ END:VCARD`;
       ? style.moduleShape as DotType
       : 'square';
 
+    // Create the QR config object
     const config: any = {
       width: style.size,
       height: style.size,
       data: getQRValue(),
       margin: style.padding,
       dotsOptions: {
-        color: style.gradient ? undefined : style.foregroundColor,
-        gradient: style.gradient ? {
-          type: style.gradient.type,
-          rotation: style.gradient.rotation,
-          colorStops: style.gradient.colorStops,
-        } : undefined,
+        color: style.foregroundColor, // Ensure foreground color is applied
         type: moduleShape
       },
       backgroundOptions: {
         color: style.backgroundColor,
       },
       cornersSquareOptions: {
-        color: style.gradient ? style.gradient.colorStops[0] : style.foregroundColor,
+        color: style.foregroundColor, // Ensure foreground color is applied to corners
         type: style.cornerSquareType
       },
       cornersDotOptions: {
-        color: style.gradient ? style.gradient.colorStops[0] : style.foregroundColor,
+        color: style.foregroundColor, // Ensure foreground color is applied to corner dots
         type: style.cornerDotType
       },
       qrOptions: {
         errorCorrectionLevel: style.errorCorrectionLevel
       }
     };
+
+    // Add gradient if defined, otherwise use the solid foreground color
+    if (style.gradient && style.gradient.colorStops[0] !== style.gradient.colorStops[1]) {
+      config.dotsOptions.gradient = {
+        type: style.gradient.type,
+        rotation: style.gradient.rotation,
+        colorStops: style.gradient.colorStops,
+      };
+      
+      config.cornersSquareOptions.color = style.gradient.colorStops[0];
+      config.cornersDotOptions.color = style.gradient.colorStops[0];
+    }
 
     // Add logo configuration if a logo source is provided
     if (style.logo?.src) {
@@ -91,6 +99,7 @@ END:VCARD`;
       };
     }
 
+    // Create new QR code instance and append to the DOM
     qrCode.current = new QRCodeStyling(config);
 
     if (qrRef.current) {

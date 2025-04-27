@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -36,6 +35,10 @@ export function QRStyle() {
     { value: "H", label: "High (30%)" },
   ];
 
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>, colorType: 'foregroundColor' | 'backgroundColor') => {
+    updateQRStyle({ [colorType]: e.target.value });
+  };
+
   return (
     <Card className="w-full">
       <CardHeader className={isMobile ? "p-4" : "p-6"}>
@@ -52,11 +55,11 @@ export function QRStyle() {
                 type="color"
                 className="w-12 h-10 p-1"
                 value={style.foregroundColor}
-                onChange={(e) => updateQRStyle({ foregroundColor: e.target.value })}
+                onChange={(e) => handleColorChange(e, 'foregroundColor')}
               />
               <Input
                 value={style.foregroundColor}
-                onChange={(e) => updateQRStyle({ foregroundColor: e.target.value })}
+                onChange={(e) => handleColorChange(e, 'foregroundColor')}
                 className="flex-1"
               />
             </div>
@@ -70,11 +73,11 @@ export function QRStyle() {
                 type="color"
                 className="w-12 h-10 p-1"
                 value={style.backgroundColor}
-                onChange={(e) => updateQRStyle({ backgroundColor: e.target.value })}
+                onChange={(e) => handleColorChange(e, 'backgroundColor')}
               />
               <Input
                 value={style.backgroundColor}
-                onChange={(e) => updateQRStyle({ backgroundColor: e.target.value })}
+                onChange={(e) => handleColorChange(e, 'backgroundColor')}
                 className="flex-1"
               />
             </div>
