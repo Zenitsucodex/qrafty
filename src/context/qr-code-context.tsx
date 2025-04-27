@@ -15,7 +15,7 @@ const defaultQRData: QRCodeData = {
 };
 
 const defaultQRStyle: QRCodeStyle = {
-  foregroundColor: '#7E69AB',
+  foregroundColor: '#000000e6',
   backgroundColor: '#FFFFFF',
   moduleShape: 'square',
   cornerSquareType: 'square',
@@ -29,6 +29,11 @@ const defaultQRStyle: QRCodeStyle = {
     opacity: 1,
     margin: 5,
     removeStroke: true
+  },
+  gradient: {
+    type: 'linear',
+    rotation: 45,
+    colorStops: ['#000000e6', '#000000e6']
   }
 };
 
